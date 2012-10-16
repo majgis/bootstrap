@@ -1,3 +1,5 @@
+BOOTSTRAP_NS = ./docs/assets/css/bootstrap-ns.css
+BOOTSTRAP_NS_LESS = ./less/bootstrap-ns.less
 BOOTSTRAP = ./docs/assets/css/bootstrap.css
 BOOTSTRAP_LESS = ./less/bootstrap.less
 BOOTSTRAP_RESPONSIVE = ./docs/assets/css/bootstrap-responsive.css
@@ -18,6 +20,7 @@ build:
 	@jshint js/*.js --config js/.jshintrc
 	@jshint js/tests/unit/*.js --config js/.jshintrc
 	@echo "Running JSHint on javascript...             ${CHECK} Done"
+	@recess --compile ${BOOTSTRAP_NS_LESS} > ${BOOTSTRAP_NS}
 	@recess --compile ${BOOTSTRAP_LESS} > ${BOOTSTRAP}
 	@recess --compile ${BOOTSTRAP_RESPONSIVE_LESS} > ${BOOTSTRAP_RESPONSIVE}
 	@echo "Compiling LESS with Recess...               ${CHECK} Done"
@@ -67,6 +70,8 @@ bootstrap:
 	mkdir -p bootstrap/css
 	mkdir -p bootstrap/js
 	cp img/* bootstrap/img/
+	recess --compile ${BOOTSTRAP_NS_LESS} > bootstrap/css/bootstrap-ns.css
+	recess --compress ${BOOTSTRAP_NS_LESS} > bootstrap/css/bootstrap-ns.min.css	
 	recess --compile ${BOOTSTRAP_LESS} > bootstrap/css/bootstrap.css
 	recess --compress ${BOOTSTRAP_LESS} > bootstrap/css/bootstrap.min.css
 	recess --compile ${BOOTSTRAP_RESPONSIVE_LESS} > bootstrap/css/bootstrap-responsive.css
